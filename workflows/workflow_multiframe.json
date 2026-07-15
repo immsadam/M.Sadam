@@ -1,0 +1,157 @@
+{
+  "1": {
+    "inputs": {
+      "ckpt_name": "sd15_model.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "2": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive)"
+    }
+  },
+  "3": {
+    "inputs": {
+      "text": "bad quality, low quality, blur, distorted",
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative)"
+    }
+  },
+  "4": {
+    "inputs": {
+      "seed": 0,
+      "steps": 20,
+      "cfg": 7.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0,
+      "model": [
+        "1",
+        0
+      ],
+      "positive": [
+        "2",
+        0
+      ],
+      "negative": [
+        "3",
+        0
+      ],
+      "latent_image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "5": {
+    "inputs": {
+      "width": 768,
+      "height": 768,
+      "length": 48,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image (High Quality)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "samples": [
+        "4",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "7": {
+    "inputs": {
+      "images": [
+        "6",
+        0
+      ],
+      "interpolation": "linear",
+      "frame_count": 24
+    },
+    "class_type": "FrameInterpolation",
+    "_meta": {
+      "title": "Frame Interpolation (Optional)"
+    }
+  },
+  "8": {
+    "inputs": {
+      "images": [
+        "7",
+        0
+      ],
+      "format": "video/mp4",
+      "fps": 24,
+      "quality": 95,
+      "optimize": false
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine (VHS)"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "Character_Video",
+      "images": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image Frames"
+    }
+  },
+  "_meta": {
+    "workflow_info": {
+      "name": "Character Story Video Generator - Multi-Frame",
+      "version": "1.5",
+      "description": "Generate multiple frames dengan interpolation untuk smooth video",
+      "nodes_count": 9,
+      "required_extensions": [
+        "ComfyUI-Frame-Interpolation",
+        "ComfyUI_VHS_VideoCombine"
+      ],
+      "instructions": [
+        "1. Install frame interpolation extension",
+        "2. Generate multiple frames (length: 48)",
+        "3. Interpolate untuk smooth motion",
+        "4. Combine ke video MP4 otomatis",
+        "5. Optimal untuk slow-motion effect"
+      ]
+    }
+  }
+}
