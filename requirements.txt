@@ -1,0 +1,26 @@
+# ============================================
+# Python Dependencies
+# AI Character Story Video Generator
+# ============================================
+
+# Audio processing
+pydub>=0.25.1
+
+# API requests
+requests>=2.28.0
+
+# JSON processing
+PyYAML>=6.0
+
+# Path handling (optional, built-in in Python 3.4+)
+pathlib2>=2.3.7; python_version < '3.4'
+
+# Image processing (optional)
+Pillow>=9.0.0
+
+# Video processing (optional)
+opencv-python>=4.5.0
+
+# Console UI improvements (optional)
+colorama>=0.4.4
+tqdm>=4.62.0
